@@ -1,0 +1,8 @@
+I am interested in learning about cyber security
+and have built scripts for hacking and automation. 
+I enjoy upgrading these programs and adding new features.
+Regarding the password generator, what can be updated?
+ 1. Encrypt passwords and preserve them securely. 
+ 2. Use a genuine database for greater convenience and features.
+ 3. Show and hide password features. 
+ 4. Create a separate database for users to utilize and continue.

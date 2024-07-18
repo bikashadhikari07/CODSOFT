@@ -1,0 +1,3 @@
+enhanced my understanding of using JSON to store and retrieve data
+Prectice file opening and its modes
+discovered great to use TTK notebooks

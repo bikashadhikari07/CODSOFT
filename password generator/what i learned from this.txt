@@ -1,0 +1,2 @@
+improved working with strings
+Fun to use random
