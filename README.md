@@ -39,7 +39,7 @@ This project is a contact management application with additional features for sa
 ### Author
 
 - **Author:** Bikash Adhikari
-- **linkedin:** [Bikash Adhikari](www.linkedin.com/in/itsmebikash)
+- **LinkedIn:** [Bikash Adhikari](https://www.linkedin.com/in/itsmebikash)
 
 ---
 
@@ -78,7 +78,7 @@ This project is a password management application that generates random password
 ### Author
 
 - **Author:** Bikash Adhikari
-- **linkedin:** [Bikash Adhikari](www.linkedin.com/in/itsmebikash)
+- **LinkedIn:** [Bikash Adhikari](https://www.linkedin.com/in/itsmebikash)
 
 ---
 
@@ -116,7 +116,7 @@ This project is a simple Rock Paper Scissors game implemented using Tkinter in P
 ### Author
 
 - **Author:** Bikash Adhikari
-- **linkedin:** [Bikash Adhikari](www.linkedin.com/in/itsmebikash)
+- **LinkedIn:** [Bikash Adhikari](https://www.linkedin.com/in/itsmebikash)
 
 ---
 
