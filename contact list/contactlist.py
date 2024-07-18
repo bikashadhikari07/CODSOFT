@@ -1,6 +1,21 @@
 import tkinter as tk
 from tkinter import ttk
 from tkinter import messagebox
+import json
+
+# File path for storing contacts
+CONTACTS_FILE = "contacts.txt"
+
+def save_contacts():
+    with open(CONTACTS_FILE, "w") as f:
+        json.dump(contacts, f)
+
+def load_contacts():
+    try:
+        with open(CONTACTS_FILE, "r") as f:
+            return json.load(f)
+    except FileNotFoundError:
+        return []
 
 def add_contact():
     name = entry_name.get().strip()
@@ -11,6 +26,7 @@ def add_contact():
     if name and phone:
         contact = {"Name": name, "Phone": phone, "Email": email, "Address": address}
         contacts.append(contact)
+        save_contacts()  # Save updated contacts to file
         update_contact_list()
         entry_name.delete(0, tk.END)
         entry_phone.delete(0, tk.END)
@@ -20,9 +36,11 @@ def add_contact():
         messagebox.showwarning("Warning", "Please enter at least Name and Phone.")
 
 def update_contact_list():
+    # Clear existing treeview items
     for item in tree.get_children():
         tree.delete(item)
 
+    # Insert updated contacts into treeview
     for idx, contact in enumerate(contacts, start=1):
         tree.insert("", "end", iid=idx, values=(idx, contact["Name"], contact["Phone"], contact["Email"], contact["Address"]))
 
@@ -31,6 +49,7 @@ def delete_contact():
     if selected_item:
         contact_index = int(tree.item(selected_item, "values")[0]) - 1
         del contacts[contact_index]
+        save_contacts()  # Save updated contacts to file
         update_contact_list()
 
 def edit_contact():
@@ -70,6 +89,7 @@ def edit_contact():
                 "Address": entry_address_edit.get().strip()
             }
             contacts[contact_index] = updated_contact
+            save_contacts()  # Save updated contacts to file
             update_contact_list()
             edit_window.destroy()
 
@@ -85,23 +105,31 @@ def search_contact():
     for idx, contact in enumerate(matched_contacts, start=1):
         tree_search.insert("", "end", values=(idx, contact["Name"], contact["Phone"], contact["Email"], contact["Address"]))
 
+# Initialize tkinter root window
 root = tk.Tk()
 root.title("Contact Book")
 root.geometry("1000x400")
 
-contacts = []
+# Load contacts from file
+contacts = load_contacts()
 
+# Create notebook for tabs
 notebook = ttk.Notebook(root)
 notebook.pack(expand=True, fill='both')
 
+# Add Contact Tab
 tab_add_contact = ttk.Frame(notebook)
-tab_view_contacts = ttk.Frame(notebook)
-tab_search_contacts = ttk.Frame(notebook)
-
 notebook.add(tab_add_contact, text='Add Contact')
+
+# View Contacts Tab
+tab_view_contacts = ttk.Frame(notebook)
 notebook.add(tab_view_contacts, text='View Contacts')
+
+# Search Contacts Tab
+tab_search_contacts = ttk.Frame(notebook)
 notebook.add(tab_search_contacts, text='Search Contacts')
 
+# Labels and Entries for Add Contact Tab
 ttk.Label(tab_add_contact, text="Name:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
 entry_name = ttk.Entry(tab_add_contact, width=30)
 entry_name.grid(row=0, column=1, padx=10, pady=10)
@@ -121,6 +149,7 @@ entry_address.grid(row=3, column=1, padx=10, pady=10)
 btn_add_contact = ttk.Button(tab_add_contact, text="Add Contact", command=add_contact)
 btn_add_contact.grid(row=4, column=0, columnspan=2, pady=10)
 
+# Treeview for View Contacts Tab
 tree = ttk.Treeview(tab_view_contacts, columns=("SN", "Name", "Phone", "Email", "Address"), show="headings")
 tree.heading("SN", text="SN")
 tree.heading("Name", text="Name")
@@ -135,8 +164,9 @@ btn_delete_contact.pack(pady=10)
 btn_edit_contact = ttk.Button(tab_view_contacts, text="Edit Contact", command=edit_contact)
 btn_edit_contact.pack(pady=10)
 
-update_contact_list()
+update_contact_list()  # Update treeview with loaded contacts
 
+# Search Contacts Tab
 ttk.Label(tab_search_contacts, text="Search Contact:").grid(row=0, column=0, padx=10, pady=10, sticky="e")
 entry_search = ttk.Entry(tab_search_contacts, width=50)
 entry_search.grid(row=0, column=1, padx=10, pady=10)
